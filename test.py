@@ -151,20 +151,20 @@ def _eval(model, args):
 
 if __name__ == '__main__':
 
-    blur_types = ['', '_size_12.5', '_size_25', '_size_37.5', '_size_50', '_size_62.5', '_size_75', '_size_87.5']
-    gopro_folders = ['GOPR0384_11_00', 'GOPR0384_11_05', 'GOPR0385_11_01', 'GOPR0396_11_00', 'GOPR0410_11_00', 'GOPR0854_11_00', 'GOPR0862_11_00', 'GOPR0868_11_00', 'GOPR0869_11_00', 'GOPR0871_11_00', 'GOPR0881_11_01']
+    gblur_types = ['blur_gb_var_1', 'blur_gb_var_3', 'blur_gb_var_5', 'blur_gb_var_7']
+    gopro_folders = [ 'GOPR0396_11_00', 'GOPR0410_11_00', 'GOPR0854_11_00', 'GOPR0862_11_00', 'GOPR0868_11_00', 'GOPR0869_11_00', 'GOPR0871_11_00', 'GOPR0881_11_01']
     for gopro_fol in gopro_folders:
 
-        for data in blur_types:
+        for data in gblur_types:
             parser = argparse.ArgumentParser()
             # copy images to input
             dst = os.path.join('./dataset/gopro/test/input')
-            src = os.path.join('../test/test/' + gopro_fol + '/blur' + data)
+            src = os.path.join('../test_with_gaussian_blur/test_with_gaussian_blur/' + gopro_fol + '/' + data)
             copy_files(src, dst)
 
             # copy images to target
             dst = os.path.join('./dataset/gopro/test/target')
-            src = os.path.join('../test/test/' + gopro_fol + '/sharp' + data)
+            src = os.path.join('../test/test/' + gopro_fol + '/sharp')
             copy_files(src, dst)
 
             # Directories
@@ -176,6 +176,6 @@ if __name__ == '__main__':
             parser.add_argument('--save_image', type=bool, default=True, choices=[True, False])
 
             args = parser.parse_args()
-            args.result_dir = os.path.join('results/', args.model_name, 'GoPro/' + gopro_fol + '/blur' + data)
+            args.result_dir = os.path.join('results/', args.model_name, 'GoPro/' + gopro_fol + '/' + data)
             print(args)
             main(args)
